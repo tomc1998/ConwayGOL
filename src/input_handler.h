@@ -1,6 +1,9 @@
 #include <GLFW/glfw3.h>
 #include "state.h"
 
+extern const int CONTROL_QUIT;
+extern const int CONTROL_STEP;
+
 void keyCallback(GLFWwindow* window,
                  int key,
                  int scancode,

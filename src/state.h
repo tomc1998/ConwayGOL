@@ -18,6 +18,6 @@ void initBoard(State* state, int width, int height);
 void freeBoard(State* state);
 
 // Steps the board
-void step();
+void step(State* state);
 
 #endif

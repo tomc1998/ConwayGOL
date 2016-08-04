@@ -28,12 +28,12 @@ void render(State* state) {
     for (jj = 0; jj < state->boardHeight; ++jj) {
       int val = state->board[ii + jj*state->boardWidth];
       if (val == 0) {
-        glColor3f(0, 0, 0);
+        glColor3f(1.f, 1.f, 1.f);
       }
       else if (val == 1) {
-        glColor3f(1, 1, 1);
+        glColor3f(0.f, 0.f, 0.f);
       }
-      glVertex2f(ii*16 + 8, jj*16 + 8);
+      glVertex2f((GLfloat)(ii*16 + 8), (GLfloat)(jj*16 + 8));
     }
   }
   glEnd();

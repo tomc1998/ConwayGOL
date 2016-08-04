@@ -2,6 +2,9 @@
 #include "state.h"
 #include "input_handler.h"
 
+const int CONTROL_QUIT = GLFW_KEY_ESCAPE;
+const int CONTROL_STEP = GLFW_KEY_SPACE;
+
 State* state = NULL;
 
 void keyCallback(GLFWwindow* window,
@@ -9,8 +12,11 @@ void keyCallback(GLFWwindow* window,
                  int scancode,
                  int action,
                  int mods) {
-  if (key == GLFW_KEY_ESCAPE) {
+  if (key == CONTROL_QUIT) {
     state->endflag = 1;
+  }
+  else if (key == CONTROL_STEP && action == GLFW_PRESS) {
+    step(state);
   }
 }
 

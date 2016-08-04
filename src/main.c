@@ -23,16 +23,19 @@ int main(int argc, char** argv) {
   setInputHandlerStateRef(&state);
   initGLFW(&state);
   initRenderer(&state);
-  state.board[21] = 1;
-  state.board[22] = 1;
-  state.board[23] = 1;
+  state.board[25] = 1;
+  state.board[43] = 1;
+  state.board[45] = 1;
+  state.board[64] = 1;
+  state.board[65] = 1;
 
   while(!state.endflag) {
+    // render
     glClear(GL_COLOR_BUFFER_BIT);
-
     render(&state);
-    
     glfwSwapBuffers(window);
+    
+    // Poll input
     glfwPollEvents();
 
     if (glfwWindowShouldClose(window)) {
