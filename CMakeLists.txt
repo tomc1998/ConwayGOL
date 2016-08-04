@@ -11,6 +11,12 @@ set (CONWAY_SRCS ${PROJECT_SOURCE_DIR}/main.c
 
 add_executable(Conway ${CONWAY_SRCS})
 
+if (MSVC)
+  target_link_libraries(Conway ${PROJECT_ROOT_DIR}/lib/glfw3.lib opengl32 gdi32 user32 kernel32 shell32)
+  include_directories(${PROJECT_ROOT_DIR}/include)
+	set (CMAKE_CXX_FLAGS "/MD /EHsc")
+endif (MSVC)
+
 if(${CMAKE_COMPILER_IS_GNUCC})
 	link_directories(/usr/local/lib)
 	target_link_libraries(Conway glfw3 GL 
