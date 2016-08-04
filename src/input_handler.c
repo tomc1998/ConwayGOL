@@ -65,6 +65,10 @@ void cursorPosCallback(GLFWwindow* window,
     int cellX = floor(xPos / state->cellSize);
     int cellY = floor(yPos / state->cellSize);
     int index = cellX + cellY*state->boardWidth;
+    if (index < 0 ||
+        index >= state->boardWidth*state->boardHeight) {
+      return;
+    }
     if (index != lastCellModifiedIndex) {
       state->board[index] = !state->board[index];
       lastCellModifiedIndex = index;
