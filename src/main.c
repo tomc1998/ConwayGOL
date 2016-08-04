@@ -14,20 +14,17 @@ void initGLFW(State* state) {
                             "Conway", NULL, NULL);
   glfwMakeContextCurrent(window);
   glfwSetKeyCallback(window, keyCallback);
+  glfwSetMouseButtonCallback(window, mouseButtonCallback);
+  glfwSetCursorPosCallback(window, cursorPosCallback);
 }
 
 int main(int argc, char** argv) {
   State state;
   initState(&state, 800, 450);
-  initBoard(&state, 20, 20);
+  initBoard(&state, 100, 100);
   setInputHandlerStateRef(&state);
   initGLFW(&state);
   initRenderer(&state);
-  state.board[25] = 1;
-  state.board[43] = 1;
-  state.board[45] = 1;
-  state.board[64] = 1;
-  state.board[65] = 1;
 
   while(!state.endflag) {
     // render

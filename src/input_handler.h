@@ -10,6 +10,15 @@ void keyCallback(GLFWwindow* window,
                  int action,
                  int mods);
 
+void mouseButtonCallback(GLFWwindow* window,
+                         int button,
+                         int action,
+                         int mods);
+
+void cursorPosCallback(GLFWwindow* window,
+                              double xpos,
+                              double ypos);
+
 // Call this to let input_handler reference the state
 void setInputHandlerStateRef(State* _state);
 

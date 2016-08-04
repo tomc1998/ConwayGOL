@@ -21,9 +21,10 @@ void render(State* state) {
   }
   int jj;
   int ii = 0;
-  glPointSize(16);
+  glPointSize(state->cellSize);
   glColor3f(1, 1, 1);
   glBegin(GL_POINTS);
+  int halfCellSize = state->cellSize/2;
   for (; ii < state->boardWidth; ++ii) {
     for (jj = 0; jj < state->boardHeight; ++jj) {
       int val = state->board[ii + jj*state->boardWidth];
@@ -33,7 +34,8 @@ void render(State* state) {
       else if (val == 1) {
         glColor3f(0.f, 0.f, 0.f);
       }
-      glVertex2f((GLfloat)(ii*16 + 8), (GLfloat)(jj*16 + 8));
+      glVertex2f((GLfloat)(ii*state->cellSize + halfCellSize),
+                 (GLfloat)(jj*state->cellSize + halfCellSize));
     }
   }
   glEnd();

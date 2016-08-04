@@ -92,6 +92,9 @@ void initBoard(State* state, int width, int height) {
   state->board = (int*) malloc(sizeof(int)*width*height);
   state->boardWidth = width;
   state->boardHeight = height;
+  state->cellSize = 4;
+  state->boardScreenX = 0;
+  state->boardScreenY = 0;
   int ii = 0;
   for (; ii < width*height; ii ++) {
     state->board[ii] = 0;

@@ -1,10 +1,13 @@
 #ifndef STATE_H
 #define STATE_H
+#include <GLFW/glfw3.h>
 
 typedef struct {
   int SCREEN_WIDTH, SCREEN_HEIGHT;
   int* board;
   int boardWidth, boardHeight;
+  GLfloat boardScreenX, boardScreenY;
+  GLfloat cellSize;
   int endflag;
 } State;
 
