@@ -9,6 +9,7 @@ typedef struct {
   GLfloat boardScreenX, boardScreenY;
   GLfloat cellSize;
   int endflag;
+  int running;
 } State;
 
 // Initialises some state

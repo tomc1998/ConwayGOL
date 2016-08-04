@@ -4,42 +4,102 @@
 
 // Gets the number of alive cells adjacent to the one on the board at
 // the given index
+// Loops around at edge
 int getNumAdjCells(State* state, int index) {
-  // Check if at borders of board
-  // Booleans to specify which sides of the cell are valid to check
-  int checkTop = 0, checkLeft = 0, checkBottom = 0, checkRight = 0;
-  // Assign these check* booleans
-  if (index % state->boardWidth != 0) {checkLeft = 1;}
-  if (index % state->boardWidth != state->boardWidth - 1) {checkRight = 1;}
-  if (index >= state->boardWidth) {checkTop = 1;}
-  if (index < state->boardWidth*(state->boardHeight-1)) {checkBottom = 1;}
+  // Free if at borders of board
+  // Booleans to specify which sides of the cell are valid to free
+  int freeTop = 0, freeLeft = 0, freeBottom = 0, freeRight = 0;
+  // Assign these free* booleans
+  if (index % state->boardWidth != 0)
+    {freeLeft = 1;}
+  if (index % state->boardWidth != state->boardWidth - 1)
+    {freeRight = 1;}
+  if (index >= state->boardWidth)
+    {freeTop = 1;}
+  if (index < state->boardWidth*(state->boardHeight-1))
+    {freeBottom = 1;}
 
-  // Now check adjacent cells
+  int bw = state->boardWidth;
+  int bh = state->boardHeight;
+  // Now free adjacent cells
   int numCells = 0;
-  if (checkLeft) { // Check left 3 cells
+  if (freeLeft) { // Free left 3 cells
     if (state->board[index-1] == 1) {++numCells;}
-    if (checkTop) {
-      if(state->board[index-state->boardWidth-1] == 1) {++numCells;}
+    if (freeTop) {
+      if (state->board[index-bw-1] == 1) {++numCells;}
     }
-    if (checkBottom) {
-      if(state->board[index+state->boardWidth-1] == 1) {++numCells;}
+    else {
+      if (state->board[(bh-1)*bw + index - 1] == 1) {++numCells;}
+    }
+    if (freeBottom) {
+      if(state->board[index+bw-1] == 1) {++numCells;}
+    }
+    else {
+      if (state->board[index%bw-1] == 1) {++numCells;}
     }
   }
-  if (checkRight) { // Check right 3 cells
+  else { // Left 3 cells are against edge of board
+    if (state->board[index+bw-1] == 1) {++numCells;}
+    if (freeTop) {
+      if (state->board[index-1] == 1) {++numCells;}
+    }
+    else {
+      if (state->board[bh*bw-1] == 1) {++numCells;}
+    }
+    if (freeBottom) {
+      if(state->board[index+bw+bw-1] == 1) {++numCells;}
+    }
+    else {
+      if (state->board[bw-1] == 1) {++numCells;}
+    }
+  }
+
+  if (freeRight) { // Free right 3 cells
     if (state->board[index+1] == 1) {++numCells;}
-    if (checkTop) {
-      if(state->board[index-state->boardWidth+1] == 1) {++numCells;}
+    if (freeTop) {
+      if(state->board[index-bw+1] == 1) {++numCells;}
     }
-    if (checkBottom) {
-      if(state->board[index+state->boardWidth+1] == 1) {++numCells;}
+    else {
+      if (state->board[(bh-1)*bw + index + 1] == 1) {++numCells;}
+    }
+    if (freeBottom) {
+      if(state->board[index+bw+1] == 1) {++numCells;}
+    }
+    else {
+      if (state->board[index%bw+1] == 1) {++numCells;}
     }
   }
-  if (checkTop) { // Check mid top cell
-    if (state->board[index-state->boardWidth] == 1) {++numCells;}
+  else { // Left 3 cells are against edge of board
+    if (state->board[index-bw+1] == 1) {++numCells;}
+    if (freeTop) {
+      if(state->board[index-bw-bw+1] == 1) {++numCells;}
+    }
+    else {
+      if (state->board[bw*(bh-1)] == 1) {++numCells;}
+    }
+    if (freeBottom) {
+      if(state->board[index+1] == 1) {++numCells;}
+    }
+    else {
+      if (state->board[0] == 1) {++numCells;}
+    }
   }
-  if (checkBottom) { // Check mid bottom cell
-    if (state->board[index+state->boardWidth] == 1) {++numCells;}
+
+  
+  if (freeTop) { // Free mid top cell
+    if (state->board[index-bw] == 1) {++numCells;}
   }
+  else {
+    if (state->board[index + bw*(bh-1)] == 1) {++numCells;}
+  }
+
+  if (freeBottom) { // Free mid bottom cell
+    if (state->board[index+bw] == 1) {++numCells;}
+  }
+  else {
+    if (state->board[index%bw] == 1) {++numCells;}
+  }
+
   return numCells;
 }
 
@@ -48,6 +108,9 @@ void initState(State* state, int screenWidth, int screenHeight) {
   state->SCREEN_HEIGHT = screenHeight;
   state->endflag = 0;
   state->board = 0;
+  state->boardScreenX = 0;
+  state->boardScreenY = 0;
+  state->running = 0;
 }
 
 void step(State* state) {
@@ -92,7 +155,7 @@ void initBoard(State* state, int width, int height) {
   state->board = (int*) malloc(sizeof(int)*width*height);
   state->boardWidth = width;
   state->boardHeight = height;
-  state->cellSize = 4;
+  state->cellSize = 16;
   state->boardScreenX = 0;
   state->boardScreenY = 0;
   int ii = 0;

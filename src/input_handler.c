@@ -6,6 +6,7 @@
 
 const int CONTROL_QUIT = GLFW_KEY_ESCAPE;
 const int CONTROL_STEP = GLFW_KEY_SPACE;
+const int CONTROL_RUN = GLFW_KEY_E;
 
 State* state = NULL;
 int lmbDown = 0;
@@ -23,6 +24,9 @@ void keyCallback(GLFWwindow* window,
   }
   else if (key == CONTROL_STEP && action == GLFW_PRESS) {
     step(state);
+  }
+  else if (key == CONTROL_RUN && action == GLFW_PRESS) {
+    state->running = !state->running;
   }
 }
 

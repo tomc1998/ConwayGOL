@@ -21,7 +21,7 @@ void initGLFW(State* state) {
 int main(int argc, char** argv) {
   State state;
   initState(&state, 800, 450);
-  initBoard(&state, 100, 100);
+  initBoard(&state, 20, 20);
   setInputHandlerStateRef(&state);
   initGLFW(&state);
   initRenderer(&state);
@@ -31,6 +31,9 @@ int main(int argc, char** argv) {
     glClear(GL_COLOR_BUFFER_BIT);
     render(&state);
     glfwSwapBuffers(window);
+    if (state.running) {
+      step(&state);
+    }
     
     // Poll input
     glfwPollEvents();

@@ -3,6 +3,7 @@
 
 extern const int CONTROL_QUIT;
 extern const int CONTROL_STEP;
+extern const int CONTROL_RUN;
 
 void keyCallback(GLFWwindow* window,
                  int key,
